@@ -3,6 +3,9 @@ const connectDB = require('./config/db');
 const overdraftAccounts = require('./routes/overdraftAccounts');
 const dotenv = require('dotenv');
 dotenv.config();
+const userRoutes = require('./routes/UserRoutes');
+
+
 
 connectDB();
 
@@ -15,6 +18,7 @@ connectDB();
 app.use(express.json());
 
 app.use('/api/overdraftAccounts', overdraftAccounts);
+app.use('/api/userRoutes', userRoutes);
 
 const PORT = process.env.PORT || 5000;
 
