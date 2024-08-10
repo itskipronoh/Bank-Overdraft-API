@@ -1,19 +1,18 @@
-const Transaction = require('../models/transaction');
+const Transaction = require('../models/Transaction');
 const OverdraftAccount = require('../models/overdraftAccount');
 
-// Create a new transaction
+
 exports.createTransaction = async (req, res) => {
     const { overdraftAccount, transactionType, amount } = req.body;
 
     try {
-        // Ensure the overdraft account exists
+       
         const account = await OverdraftAccount.findById(overdraftAccount);
 
         if (!account) {
             return res.status(404).json({ message: 'Overdraft account not found' });
         }
 
-        // Handle overdraft logic if necessary
         if (transactionType === 'withdrawal' && (account.currentBalance - amount < -account.overdraftLimit)) {
             return res.status(400).json({ message: 'Insufficient funds including overdraft limit' });
         }
