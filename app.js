@@ -4,6 +4,7 @@ const overdraftAccounts = require('./routes/overdraftAccounts');
 const dotenv = require('dotenv');
 dotenv.config();
 const userRoutes = require('./routes/UserRoutes');
+const transactionRoutes = require('./routes/TransactionRoutes');
 
 
 
@@ -19,6 +20,7 @@ app.use(express.json());
 
 app.use('/api/overdraftAccounts', overdraftAccounts);
 app.use('/api/userRoutes', userRoutes);
+app.use('/api/transactionRoutes', transactionRoutes);
 
 const PORT = process.env.PORT || 5000;
 
