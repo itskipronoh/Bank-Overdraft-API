@@ -1,24 +1,24 @@
 const Payment = require('../models/payment');
 const OverdraftAccount = require('../models/overdraftAccount');
 
-// Create a new payment
+
 exports.createPayment = async (req, res) => {
     const { overdraftAccount, amount, paymentMethod, referenceNumber } = req.body;
 
     try {
-        // Ensure the overdraft account exists
+   
         const account = await OverdraftAccount.findById(overdraftAccount);
 
         if (!account) {
             return res.status(404).json({ message: 'Overdraft account not found' });
         }
 
-        // Update the overdraft account balance
+    
         account.currentBalance += amount;
 
         await account.save();
 
-        // Create and save the payment
+  
         const payment = new Payment({
             overdraftAccount,
             amount,
@@ -34,7 +34,7 @@ exports.createPayment = async (req, res) => {
     }
 };
 
-// Get all payments for a specific overdraft account
+
 exports.getPaymentsByAccount = async (req, res) => {
     try {
         const payments = await Payment.find({ overdraftAccount: req.params.accountId });
@@ -44,7 +44,7 @@ exports.getPaymentsByAccount = async (req, res) => {
     }
 };
 
-// Get a single payment by ID
+
 exports.getPaymentById = async (req, res) => {
     try {
         const payment = await Payment.findById(req.params.id);
@@ -59,7 +59,7 @@ exports.getPaymentById = async (req, res) => {
     }
 };
 
-// Delete a payment
+
 exports.deletePayment = async (req, res) => {
     try {
         const payment = await Payment.findById(req.params.id);
